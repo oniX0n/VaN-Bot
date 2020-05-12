@@ -4,10 +4,12 @@ import token_store
 from discord.utils import get
 
 standard_roles = ['dj']
+
 bot = commands.Bot(command_prefix='$')
 
 
-@bot.command(pass_context=True)
+# Commands##############################################################################################################
+@bot.command(pass_context=True)  # TODO: Fix this
 async def check_standard_roles(ctx):
     for member in ctx.guild.members:
         message_end = ' '
@@ -25,6 +27,7 @@ async def foo(ctx, arg):
     await ctx.channel.send(arg)
 
 
+# Events################################################################################################################
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
@@ -46,6 +49,7 @@ async def on_member_join(member):
     await member.add_roles_check(standard_roles)
 
 
+# General functions#####################################################################################################
 async def add_roles_check(self, role_names):
     for role_name in role_names:
         role = get(self.guild.roles, name=role_name)
