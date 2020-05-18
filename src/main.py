@@ -1,4 +1,5 @@
 import discord
+import hccomands
 import asyncio
 import sqlhandling
 from discord.ext import commands
@@ -33,15 +34,6 @@ async def check_standard_roles(ctx):
 async def update(ctx):
     await update_all(ctx.guild)
     await ctx.send('Updated this guild!')
-
-
-@bot.command()
-async def penis(ctx):
-    penisvariable=random.randint(0,1)
-    if (penisvariable==1):
-        await ctx.send("Dein Penis ist groß")
-    else:
-        await ctx.send("Dein Penis ist klein")
 
 
 # Events################################################################################################################
@@ -110,4 +102,7 @@ async def add_roles_check(self, role_names):
 
 discord.Member.add_roles_check = add_roles_check
 
+
+for command in hccomands.commands:
+    bot.add_command(command)
 bot.run(str(token_store.token))
