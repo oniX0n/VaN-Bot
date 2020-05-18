@@ -34,9 +34,11 @@ async def update(ctx):
     await update_all(ctx.guild)
     await ctx.send('Updated this guild!')
 
+
 @bot.command()
 async def penis(ctx):
     await ctx.send("Dein Penis ist klein")
+
 
 # Events################################################################################################################
 @bot.event
