@@ -1,7 +1,7 @@
 import discord
-from src import sqlhandling
+import sqlhandling
 from discord.ext import commands
-from src import token_store
+import token_store
 from discord.utils import get
 import sys
 
