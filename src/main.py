@@ -1,4 +1,5 @@
 import discord
+import asyncio
 import sqlhandling
 from discord.ext import commands
 import token_store
@@ -6,6 +7,7 @@ from discord.utils import get
 import sys
 
 standard_roles = ['dj']
+tracked_channels = []
 
 db = sqlhandling.BotDb(sys.argv[1])
 bot = commands.Bot(command_prefix='$')
@@ -40,6 +42,7 @@ async def on_ready():
 
     for guild in bot.guilds:
         await update_all(guild=guild)
+    bot.loop.create_task(check_tracked_channels_loop())
 
 
 @bot.event
@@ -54,10 +57,39 @@ async def on_member_join(member):
     await member.add_roles_check(standard_roles)
 
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+    channel = get(member.guild.channels, name='➕ New Channel')  # TODO: Hardcoded
+    if (after.channel == channel) & (before.channel != channel):
+        new_channel = await member.guild.create_voice_channel('Channel ' + member.name, position=channel.position + 1)
+        tracked_channels.append(new_channel)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
+                                                            name=str(len(tracked_channels)) + ' Channel(s)'))
+        await member.move_to(new_channel)
+
+    if (before.channel in tracked_channels) & (before.channel != after.channel):
+        await check_tracked_channels()
+
+
 # General functions#####################################################################################################
 async def update_all(guild):
     for member in guild.members:
         await member.add_roles_check(standard_roles)
+
+
+async def check_tracked_channels_loop():
+    while True:
+        await check_tracked_channels()
+        await asyncio.sleep(20)
+
+
+async def check_tracked_channels():
+    for channel in tracked_channels:
+        if len(channel.members) == 0:
+            tracked_channels.remove(channel)
+            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
+                                                                name=str(len(tracked_channels)) + ' Channel(s)'))
+            await channel.delete()
 
 
 async def add_roles_check(self, role_names):
