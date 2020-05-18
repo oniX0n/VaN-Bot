@@ -9,28 +9,34 @@ bot = commands.Bot(command_prefix='$')
 
 
 # Commands##############################################################################################################
-@bot.command(pass_context=True)  # TODO: Fix this
+@bot.command(pass_context=True)
 async def check_standard_roles(ctx):
+    message = ""
     for member in ctx.guild.members:
-        message_end = ' '
+        message_end = '\n'
         for role_name in standard_roles:
             role = get(ctx.guild.roles, name=role_name)
             if role in member.roles:
-                message_end += (role_name + ':white_check_mark: ')
+                message_end += (role_name + ' :white_check_mark:     ')
             else:
-                message_end += (role_name + ':x: ')
-        await ctx.send(member.name + message_end)
+                message_end += (role_name + ' :x:     ')
+        message += '**' + member.name + '**' + message_end + '\n'
+    await ctx.send(message)
 
 
 @bot.command()
-async def foo(ctx, arg):
-    await ctx.channel.send(arg)
+async def update(ctx):
+    await update_all(ctx.guild)
+    await ctx.send('Updated this guild!')
 
 
 # Events################################################################################################################
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
+
+    for guild in bot.guilds:
+        await update_all(guild=guild)
 
 
 @bot.event
@@ -50,6 +56,11 @@ async def on_member_join(member):
 
 
 # General functions#####################################################################################################
+async def update_all(guild):
+    for member in guild.members:
+        await member.add_roles_check(standard_roles)
+
+
 async def add_roles_check(self, role_names):
     for role_name in role_names:
         role = get(self.guild.roles, name=role_name)
