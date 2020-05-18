@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import token_store
+from src import token_store
 from discord.utils import get
 
 standard_roles = ['dj']
