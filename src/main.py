@@ -37,7 +37,11 @@ async def update(ctx):
 
 @bot.command()
 async def penis(ctx):
-    await ctx.send("Dein Penis ist klein")
+    penisvariable=random.randint(0,1)
+    if (penisvariable==1):
+        await ctx.send("Dein Penis ist groß")
+    else:
+        await ctx.send("Dein Penis ist klein")
 
 
 # Events################################################################################################################
