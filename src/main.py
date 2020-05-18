@@ -1,10 +1,13 @@
 import discord
+from src import sqlhandling
 from discord.ext import commands
 from src import token_store
 from discord.utils import get
+import sys
 
 standard_roles = ['dj']
 
+db = sqlhandling.BotDb(sys.argv[1])
 bot = commands.Bot(command_prefix='$')
 
 
@@ -42,12 +45,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-
-    if message.author == bot.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    await db.insert_message(author=message.author, content=message.content, channel=message.channel,
+                            date_send=message.created_at)  # TODO: Not sure
 
 
 @bot.event
