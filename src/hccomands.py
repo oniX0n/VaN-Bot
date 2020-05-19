@@ -20,10 +20,14 @@ async def penis_l(ctx):
         string_middle += '='
     await ctx.send('8'+string_middle+'>')
 
-commands = [penis, penis_l]
 
-@bot.command()
-async def buildjhin(ctx): # TODO: Hardcoded
+@commands.command()
+async def fufu(ctx):
+    await ctx.send('https://i.ytimg.com/vi/m2GYLDZkzF0/hqdefault.jpg')
+
+
+@commands.command()
+async def buildjhin(ctx):
     await ctx.send("Jhin 10.10 Core Build:")
     await ctx.send("Stormrazor")
     await ctx.send("Infinity Edge")
@@ -31,3 +35,6 @@ async def buildjhin(ctx): # TODO: Hardcoded
     await ctx.send("----------------------------------------")
     await ctx.send("Boots: Swiftness")
     await ctx.send("Keystone: Fleet Footwork")
+
+
+commands = [penis, penis_l, fufu, buildjhin]

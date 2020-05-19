@@ -49,8 +49,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-    await db.insert_message(author=message.author, content=message.content, channel=message.channel,
-                            date_send=message.created_at)  # TODO: Not sure
+    await db.insert('message', [message.author, message.content, message.channel, message.created_at])
 
 
 @bot.event
