@@ -21,3 +21,13 @@ async def penis_l(ctx):
     await ctx.send('8'+string_middle+'>')
 
 commands = [penis, penis_l]
+
+@bot.command()
+async def buildjhin(ctx): # TODO: Hardcoded
+    await ctx.send("Jhin 10.10 Core Build:")
+    await ctx.send("Stormrazor")
+    await ctx.send("Infinity Edge")
+    await ctx.send("Rapid Firecannon")
+    await ctx.send("----------------------------------------")
+    await ctx.send("Boots: Swiftness")
+    await ctx.send("Keystone: Fleet Footwork")
