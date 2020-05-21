@@ -28,7 +28,7 @@ async def fufu(ctx):
 
 @commands.command()
 async def buildjhin(ctx):
-    Jhinbuild = "Jhin 10.10 Core Build: \n Stormrazor \n Infinity Edge \n Rapid Firecannon \n ---------------------------------------- \n Boots: Swiftness \n Keystone: Fleet Footwork"
+    jhinbuild = 'Jhin 10.10 Core Build: \n Stormrazor \n Infinity Edge \n Rapid Firecannon \n ---------------------------------------- \n Boots: Swiftness \n Keystone: Fleet Footwork'
     await ctx.send(Jhinbuild)
     
 commands = [penis, penis_l, fufu, buildjhin]
